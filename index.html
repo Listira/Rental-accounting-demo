@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>RentalPro — Rentaldemo-Listira</title>
+<title>Rental Accounting Demo- Listira</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -201,7 +201,7 @@ tr:hover td{background:var(--surface2)}
 .tab{padding:8px 14px;font-size:13px;cursor:pointer;color:var(--text2);border-bottom:2px solid transparent;transition:all .15s}
 .tab.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:500}
 </style>
-<script>(function(){try{if(localStorage.getItem('rayhan_rental_theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<script>(function(){try{if(localStorage.getItem('rental_demo_theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
 </head>
 <body>
 
@@ -210,7 +210,7 @@ tr:hover td{background:var(--surface2)}
   <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
-  <span style="font-size:15px;font-weight:600;color:var(--blue)">Rayhan Rental</span>
+  <span style="font-size:15px;font-weight:600;color:var(--blue)">Rental Demo</span>
 </div>
 
 <div class="app">
@@ -932,7 +932,7 @@ const donutPctLabels = {
   }
 };
 // ===================== STATE =====================
-const STORAGE_KEY = 'rayhan_rental_v1';
+const STORAGE_KEY = 'rental_demo_v1';
 const COMPANY = 'PT Mitra Armada Nusantara';
 
 // Chart of Accounts mengikuti working paper Excel.
@@ -998,7 +998,7 @@ let fileSaveTimer = null;
 
 // Simpan referensi file (FileSystemFileHandle) di IndexedDB supaya saat aplikasi
 // dibuka lagi (browser baru/reload) tidak perlu pilih file dari awal — cukup klik "Hubungkan Lagi".
-const FH_DB='rayhan_rental_fh', FH_STORE='handles', FH_KEY='dataFile';
+const FH_DB='rental_demo_fh', FH_STORE='handles', FH_KEY='dataFile';
 function fhOpenDB() {
   return new Promise((res,rej)=>{
     const req=indexedDB.open(FH_DB,1);
@@ -2124,7 +2124,7 @@ function exportCSV() {
   const csv=rows.map(r=>r.join(',')).join('\n');
   const a=document.createElement('a');
   a.href='data:text/csv;charset=utf-8,﻿'+encodeURIComponent(csv);
-  a.download='laporan-rayhan-rental-'+today()+'.csv';
+  a.download='laporan-rental-demo-'+today()+'.csv';
   a.click();
   showNotif('Laporan berhasil diexport!','success');
 }
@@ -3043,7 +3043,7 @@ async function connectDataFile() {
   try {
     dataFileHandle = await window.showSaveFilePicker({
       suggestedName:'data.json',
-      types:[{description:'Data Rayhan Rental',accept:{'application/json':['.json']}}]
+      types:[{description:'Data Rental Demo',accept:{'application/json':['.json']}}]
     });
     pendingFileHandle=null;
     await fhSave(dataFileHandle);
@@ -3056,10 +3056,10 @@ async function connectDataFile() {
 async function openDataFile() {
   if(!window.showOpenFilePicker){showNotif('Browser tidak mendukung. Pakai Google Chrome / Microsoft Edge.','error');return;}
   try {
-    const [handle]=await window.showOpenFilePicker({types:[{description:'Data Rayhan Rental',accept:{'application/json':['.json']}}]});
+    const [handle]=await window.showOpenFilePicker({types:[{description:'Data Rental Demo',accept:{'application/json':['.json']}}]});
     const file=await handle.getFile();
     const data=JSON.parse(await file.text());
-    if(!data.armada || !data.coa){showNotif('File ini bukan file data Rayhan Rental yang valid.','error');return;}
+    if(!data.armada || !data.coa){showNotif('File ini bukan file data Rental Demo yang valid.','error');return;}
     if(!confirm('Muat data dari '+file.name+'? Data yang ada di browser sekarang akan ditimpa.')) return;
     state=data;
     applyMigrations();
@@ -3075,7 +3075,7 @@ async function openDataFile() {
 function exportBackup() {
   const a=document.createElement('a');
   a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(state,null,2));
-  a.download='backup-rayhan-rental-'+today()+'.json';
+  a.download='backup-rental-demo-'+today()+'.json';
   a.click();
   showNotif('Backup berhasil didownload!','success');
 }
@@ -3114,7 +3114,7 @@ function exportOperationalData() {
   };
   const a=document.createElement('a');
   a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(data,null,2));
-  a.download='data-operasional-rayhan-rental-'+today()+'.json';
+  a.download='data-operasional-rental-demo-'+today()+'.json';
   a.click();
   showNotif('Data operasional (Armada, Penyewaan, Invoice, Leasing, Penyewa, Jurnal) berhasil didownload!','success');
 }
@@ -3562,10 +3562,10 @@ function toggleTheme() {
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   if (isDark) {
     document.documentElement.removeAttribute('data-theme');
-    localStorage.setItem('rayhan_rental_theme', 'light');
+    localStorage.setItem('rental_demo_theme', 'light');
   } else {
     document.documentElement.setAttribute('data-theme', 'dark');
-    localStorage.setItem('rayhan_rental_theme', 'dark');
+    localStorage.setItem('rental_demo_theme', 'dark');
   }
   applyThemeLabel();
 }
